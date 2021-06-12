@@ -21,6 +21,33 @@ const reset = () => {
     valueIndex = 0;
 }
 
+const computeResult = () => {
+    let valueOne = Number(values[0]);
+    let valueTwo = Number(values[2]);
+    let operationResult;
+    switch(values[1]) {
+        case '+':
+            operationResult = valueOne + valueTwo;
+            break;
+        case '-':
+            operationResult = valueOne - valueTwo;
+            break;
+        case 'x':
+            operationResult = valueOne * valueTwo;
+            break;
+        case '/':
+            operationResult = valueOne / valueTwo;
+            break;
+        default:
+            operationResult = 'Error !'
+            break;
+    }
+    result.textContent = operationResult;
+    values[0] = operationResult;
+    values[2] = '';
+    valueIndex = 0;
+}
+
 /* Event Listeners */
 
 //delete button
@@ -62,6 +89,9 @@ for (let i = 0; i < buttons.length; i++) {
 //assigns operation and sets valueIndex to 2
 for (let i = 0; i < operations.length; i++) {
     operations[i].addEventListener('click', () => {
+        if (values[2]) {
+            computeResult();
+        }
         values[1] = operations[i].textContent;
         valueIndex = 2;
     })
@@ -69,30 +99,7 @@ for (let i = 0; i < operations.length; i++) {
 
 //computes operation and sets valueIndex back to 0
 equals.addEventListener('click', () => {
-    let valueOne = Number(values[0]);
-    let valueTwo = Number(values[2]);
-    let operationResult;
-    switch(values[1]) {
-        case '+':
-            operationResult = valueOne + valueTwo;
-            break;
-        case '-':
-            operationResult = valueOne - valueTwo;
-            break;
-        case 'x':
-            operationResult = valueOne * valueTwo;
-            break;
-        case '/':
-            operationResult = valueOne / valueTwo;
-            break;
-        default:
-            operationResult = 'Error !'
-            break;
-    }
-    result.textContent = operationResult;
-    values[0] = operationResult;
-    values[1] = values[2] = '';
-    valueIndex = 0;
+    computeResult()
 })
 
 //resets actual calculation
